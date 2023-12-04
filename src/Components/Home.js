@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 function Home() {
   const componentStyle = {
@@ -7,13 +9,53 @@ function Home() {
     fontSize: "50x",
   };
 
+  const teamNameList = ["Team", "Team1", "Team2", "Team3"]; //TEAM NAMES ACCORDING TO REGISTRATION, MANUALLY UPDATED
+  const [teamScores, setTeamScores] = useState({});
+  const [sortedObject, setSortedObject] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = {};
+      for (let index = 0; index < teamNameList.length; index++) {
+        const teamName = teamNameList[index];
+        await fetch(
+          "https://api.counterapi.dev/v1/reound2_techastra/" + teamName
+        )
+          .catch((error) => {
+            data[teamName] = 0;
+          })
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            data[teamName] = res.count;
+          });
+      }
+      setTeamScores(data);
+    };
+
+    fetchData();
+
+    const timer = setInterval(() => {
+      fetchData();
+    }, 30000); // refresh every 30 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const sortedArray = Object.entries(teamScores).sort((a, b) => b[1] - a[1]);
+    const sortedObject = Object.fromEntries(sortedArray);
+    setSortedObject(sortedObject);
+  }, [teamScores]);
+
   return (
     <div style={componentStyle}>
       <nav
         className="navbar navbar-expand-lg navbar-dark"
         style={{
-          background: "linear-gradient(to right, #080321, #121a4b",
-          boxShadow: "0 2px 4px rgb(0, 0, 0, 0)",
+          background: "linear-gradient(to right, #080321, #121a4b)",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
         }}
       >
         <div className="container">
@@ -88,22 +130,18 @@ function Home() {
       </nav>
       <div
         style={{
+          backgroundImage: `linear-gradient(to right, #080321, #121a4b)`,
           position: "relative",
+          minHeight: "100vh",
           overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "20px",
+          zIndex: "-1",
         }}
       >
-        <div
-          style={{
-            backgroundImage: `linear-gradient(to right, #080321, #121a4b)`,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: -1,
-          }}
-        ></div>
-
         <img
           src="images/hero-shape-1.svg"
           alt=""
@@ -114,10 +152,9 @@ function Home() {
             width: "50%",
             height: "100%",
             objectFit: "cover",
-            zIndex: 1,
+            zIndex: "1",
           }}
         />
-
         <img
           src="images/hero-shape-2.svg"
           alt=""
@@ -127,25 +164,18 @@ function Home() {
             right: 0,
             width: "50%",
             height: "100%",
-            zIndex: 1,
+            objectFit: "cover",
+            zIndex: "1",
           }}
         />
 
-        <div
-          style={{
-            position: "relative",
-            zIndex: 2,
-          }}
-        >
-          <h1 style={{ fontWeight: "bold", marginBottom: "20px" }}>
-            Welcome to iOS Club's XXX event
-          </h1>
-          <h4
-            style={{ fontWeight: "bold", color: "grey", marginBottom: "40px" }}
-          >
-            Check your position on LeaderBoard
-          </h4>
-
+        <h1 style={{ fontWeight: "bold", marginBottom: "20px", zIndex: "2" }}>
+          Welcome to iOS Club's XXX event
+        </h1>
+        <h4 style={{ fontWeight: "bold", color: "grey", marginBottom: "40px" }}>
+          Check your position on LeaderBoard
+        </h4>
+        {Object.entries(sortedObject).map(([teamName, score], index) => (
           <div
             className="card mx-auto text-center"
             style={{
@@ -179,7 +209,7 @@ function Home() {
                 className="card-title"
                 style={{ color: "#65A0FB", fontWeight: "bold" }}
               >
-                Team AZ CODERS
+                {teamName}
               </h5>
               <p
                 className="card-text"
@@ -193,199 +223,37 @@ function Home() {
               </p>
             </div>
           </div>
+        ))}
 
-          <div
-            className="card mx-auto text-center"
-            style={{
-              width: "18rem",
-              borderRadius: "20px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              marginBottom: "20px",
-            }}
-          >
-            <div
-              className="card-body"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <a
-                href="#"
-                className="btn btn-primary"
-                style={{
-                  borderRadius: "20px",
-                  fontFamily: "PT Sans, sans-serif",
-                  margin: "10px",
-                  marginBottom: "20px",
-                }}
-              >
-                Position: 1
-              </a>
-              <h5
-                className="card-title"
-                style={{ color: "#65A0FB", fontWeight: "bold" }}
-              >
-                Team AZ CODERS
-              </h5>
-              <p
-                className="card-text"
-                style={{
-                  fontFamily: "PT Sans, sans-serif",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
-                }}
-              >
-                Score: 20 Pts
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="card mx-auto text-center"
-            style={{
-              width: "18rem",
-              borderRadius: "20px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              marginBottom: "20px",
-            }}
-          >
-            <div
-              className="card-body"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <a
-                href="#"
-                className="btn btn-primary"
-                style={{
-                  borderRadius: "20px",
-                  fontFamily: "PT Sans, sans-serif",
-                  margin: "10px",
-                  marginBottom: "20px",
-                }}
-              >
-                Position: 1
-              </a>
-              <h5
-                className="card-title"
-                style={{ color: "#65A0FB", fontWeight: "bold" }}
-              >
-                Team AZ CODERS
-              </h5>
-              <p
-                className="card-text"
-                style={{
-                  fontFamily: "PT Sans, sans-serif",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
-                }}
-              >
-                Score: 20 Pts
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="card mx-auto text-center"
-            style={{
-              width: "18rem",
-              borderRadius: "20px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              marginBottom: "20px",
-            }}
-          >
-            <div
-              className="card-body"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <a
-                href="#"
-                className="btn btn-primary"
-                style={{
-                  borderRadius: "20px",
-                  fontFamily: "PT Sans, sans-serif",
-                  margin: "10px",
-                  marginBottom: "20px",
-                }}
-              >
-                Position: 1
-              </a>
-              <h5
-                className="card-title"
-                style={{ color: "#65A0FB", fontWeight: "bold" }}
-              >
-                Team AZ CODERS
-              </h5>
-              <p
-                className="card-text"
-                style={{
-                  fontFamily: "PT Sans, sans-serif",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
-                }}
-              >
-                Score: 20 Pts
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="card mx-auto text-center"
-            style={{
-              width: "18rem",
-              borderRadius: "20px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              marginBottom: "20px",
-            }}
-          >
-            <div
-              className="card-body"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <a
-                href="#"
-                className="btn btn-primary"
-                style={{
-                  borderRadius: "20px",
-                  fontFamily: "PT Sans, sans-serif",
-                  margin: "10px",
-                  marginBottom: "20px",
-                }}
-              >
-                Position: 1
-              </a>
-              <h5
-                className="card-title"
-                style={{ color: "#65A0FB", fontWeight: "bold" }}
-              >
-                Team AZ CODERS
-              </h5>
-              <p
-                className="card-text"
-                style={{
-                  fontFamily: "PT Sans, sans-serif",
-                  fontWeight: "bold",
-                  marginBottom: "10px",
-                }}
-              >
-                Score: 20 Pts
-              </p>
-            </div>
+        {/*<div className="card mx-auto text-center" style={{ width: '18rem', borderRadius: "20px", boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginBottom: '20px' }}>
+          <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <a href="#" className="btn btn-primary" style={{ borderRadius: "20px", fontFamily: 'PT Sans, sans-serif', margin: '10px' ,marginBottom: '20px'}}>
+              Position: 1
+            </a>
+            <h5 className="card-title" style={{color:'#65A0FB', fontWeight:"bold"}}>Team AZ CODERS</h5>
+            <p className="card-text" style={{fontFamily:'PT Sans, sans-serif', fontWeight:"bold", marginBottom: '10px'}}>Score: 20 Pts</p>
           </div>
         </div>
+
+        <div className="card mx-auto text-center" style={{ width: '18rem', borderRadius: "20px", boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginBottom: '20px' }}>
+          <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <a href="#" className="btn btn-primary" style={{ borderRadius: "20px", fontFamily: 'PT Sans, sans-serif', margin: '10px' ,marginBottom: '20px'}}>
+              Position: 1
+            </a>
+            <h5 className="card-title" style={{color:'#65A0FB', fontWeight:"bold"}}>Team AZ CODERS</h5>
+            <p className="card-text" style={{fontFamily:'PT Sans, sans-serif', fontWeight:"bold", marginBottom: '10px'}}>Score: 20 Pts</p>
+          </div>
+        </div>
+
+        <div className="card mx-auto text-center" style={{ width: '18rem', borderRadius: "20px", boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginBottom: '20px' }}>
+          <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <a href="#" className="btn btn-primary" style={{ borderRadius: "20px", fontFamily: 'PT Sans, sans-serif', margin: '10px' ,marginBottom: '20px'}}>
+              Position: 1
+            </a>
+            <h5 className="card-title" style={{color:'#65A0FB', fontWeight:"bold"}}>Team AZ CODERS</h5>
+            <p className="card-text" style={{fontFamily:'PT Sans, sans-serif', fontWeight:"bold", marginBottom: '10px'}}>Score: 20 Pts</p>
+          </div>
+        </div> */}
       </div>
     </div>
   );
