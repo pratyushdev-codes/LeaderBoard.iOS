@@ -21,9 +21,15 @@ function Home() {
             return res.json();
           })
           .then((res) => {
-            data[teamName] = res.count;
+            console.log(res);
+            if(res.code == 400){
+              data[teamName] = 0;
+             } 
+            else{
+              data[teamName] = res.count;
+            }
           })
-          .catch((error) => {
+          .catch(() => {
             data[teamName] = 0; // Set score to 0 if there's an error
           });
       }
