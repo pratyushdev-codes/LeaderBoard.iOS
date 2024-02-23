@@ -72,12 +72,12 @@ function Home() {
           </div>
         </div>
       </nav>
-      <div style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <div style={{ position: 'relative',   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",minHeight: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
         <img src="images/hero-shape-1.svg" alt="" style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', objectFit: 'cover' }} />
         <img src="images/hero-shape-2.svg" alt="" style={{ position: 'absolute', top: 0, right: 0, width: '50%', height: '100%', objectFit: 'cover' }} />
+        <br/>
         
-        <h1 style={{fontWeight:"bold", marginBottom: '20px'}}>Welcome to iOS Club's XXX event</h1>
-        <h4 style={{fontWeight:"bold",color:"grey", marginBottom: '40px'}}>Check your position on LeaderBoard</h4>
+        <h4 style={{fontWeight:"bold",color:"white", marginBottom: '40px'}}>Check your position on LeaderBoard</h4>
         {Object.entries(sortedObject).map(([teamName, score], index) => (
         <div className="card mx-auto text-center" style={{ width: '18rem', borderRadius: "20px", boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginBottom: '20px' }}>
           <div className="card-body" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
