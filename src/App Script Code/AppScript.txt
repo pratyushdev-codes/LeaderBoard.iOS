@@ -1,0 +1,53 @@
+const sheets = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1m5D7uwwSXwFFNDXLrP9Qt31C3Uz20rPXetDXIsuuRGQ/edit?pli=1#gid=0");
+const sheet = sheets.getSheetByName("SPL Form Data");
+
+// Function to get the last used serial number
+function getLastSerialNumber() {
+  const lastSerialNumberCell = sheet.getRange("A1"); // Assuming the serial number is in cell A1
+  const lastSerialNumber = lastSerialNumberCell.getValue();
+  return lastSerialNumber;
+}
+
+// Function to update the last used serial number
+// function updateLastSerialNumber(newSerialNumber) {
+//   const lastSerialNumberCell = sheet.getRange("A1");
+//   lastSerialNumberCell.setValue(newSerialNumber);
+//}
+
+function getCurrentDate() {
+  const currentDate = new Date();
+  return Utilities.formatDate(currentDate, "GMT", "yyyy-MM-dd HH:mm:ss");
+}
+
+function doPost(e) {
+  let data = e.parameter;
+
+  // Append row with the incremented serial number and current date
+  sheet.appendRow([
+    data.Firstname,
+    data.Lastname,
+    data.Primaryphoneno,
+    data.PaymentId,
+    data.Skill,
+    data.Battingdominant,
+    data.Battingstyle,
+    data.Dominanthand,
+    data.Bowlerstyle,
+    data.Dob,
+    data.Age,
+    data.Gender,
+    data.Adhaarno,
+    data.Passportno,
+    data.School,
+    data.Fathername,
+    data.Email,
+    data.Secondaryphoneno,
+    data.Playedbefore,
+    data.Description,
+    data.Medicalhistory
+    data.Address,
+     getCurrentDate()
+  ]);
+
+  return ContentService.createTextOutput("Your message was successfully sent to the Google Sheet database!");
+}

@@ -1,0 +1,42 @@
+/* Middleware.css */
+
+.middleware-container {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .register-title {
+    font-family: 'PT sans';
+    color: #65A0FB;
+    font-size: 2.0rem;
+    font-weight: bold;
+  }
+  
+  .banner-image {
+    border-radius: 20px;
+    width: 85%;
+    max-width: 400px;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+  }
+  
+  .custom-btn {
+    color: white;
+    background-color: #1E7CFB;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 300px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 10px auto;
+  }
+  
+  /* Media query for larger screens (laptops) */
+  @media (min-width: 760px) {
+    .custom-btn {
+      display: block;
+      width: 50%;
+      margin: 10px auto;
+    }
+  }
+  

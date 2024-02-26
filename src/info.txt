@@ -1,0 +1,10 @@
+Single Registration - onRenderURL : https://msdca-backend.onrender.com/ping
+Team Registration - onRenderURL: https://msdca-teambackend.onrender.com/ping
+
+Appscript URL for Single Registration : https://script.google.com/macros/s/AKfycby-CTUVxwfsp_gVn-H8HGaFEigKp9TRvusxnYq852NKaB8s2FZZVxmW4u3PUmy4miFK/exec
+Appscript URL for Team Registration : https://script.google.com/macros/s/AKfycbxLTAOdnBLvZkYr-bS8E5ozLjn41giXoqyn8gfLFzCaQz584lm7fdlRFAeOzL8HhGPU/exec
+
+Single Registration Google Sheets : https://docs.google.com/spreadsheets/d/1m5D7uwwSXwFFNDXLrP9Qt31C3Uz20rPXetDXIsuuRGQ/edit#gid=0
+Team Registration Google Sheets : https://docs.google.com/spreadsheets/d/1K2vpw7jJp2V59ZFXiCmym1bi03QdVA-6Ki3NfTbXnKg/edit#gid=0
+
+
